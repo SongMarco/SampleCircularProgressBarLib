@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
+    ImageView spaceshipImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,15 +17,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        spaceshipImage = (ImageView) findViewById(R.id.imageView);
+        spaceshipImage.setVisibility(View.INVISIBLE);
+
         Button button = (Button)findViewById(R.id.button);
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView spaceshipImage = (ImageView) findViewById(R.id.imageView);
-                Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.space);
-                spaceshipImage.startAnimation(hyperspaceJumpAnimation);
+                if(spaceshipImage.getVisibility() != View.VISIBLE){
+                    Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
+                    spaceshipImage.startAnimation(hyperspaceJumpAnimation);
+                    spaceshipImage.setVisibility(View.VISIBLE);
+                }
+                else{
+                    Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeout);
+                    spaceshipImage.startAnimation(hyperspaceJumpAnimation);
+                    spaceshipImage.setVisibility(View.INVISIBLE);
+                }
+
             }
         });
 
